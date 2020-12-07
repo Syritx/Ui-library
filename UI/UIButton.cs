@@ -75,6 +75,7 @@ namespace _3d.UI {
             else isHovered = false;
 
             GL.BindVertexArray(vao);
+            GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StaticDraw);
             GL.DrawArrays(PrimitiveType.Triangles, 0, vertices.Length);
         }
 
