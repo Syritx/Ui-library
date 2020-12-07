@@ -1,5 +1,6 @@
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
+using OpenTK.Windowing.Common;
 
 namespace _3d.UI {
     class UIButton : UIComponent {
@@ -8,11 +9,19 @@ namespace _3d.UI {
         float[] vertices;
     
         Shader shader;
-        int vao, vbo;
+        Camera camera;
+        Vector2[] cornerPositions;
 
-        public UIButton(string vertexShaderPath, string fragmentShaderPath, Vector2 position, Vector2 offset, Vector2 dimensions) {
+        int vao, vbo;
+        int id = 1;
+        bool isHovered = false;
+
+        public UIButton(string vertexShaderPath, string fragmentShaderPath, Vector2 position, Vector2 offset, Vector2 dimensions, Camera camera) {
             shader = new Shader(vertexShaderPath, fragmentShaderPath);
             this.dimensions = dimensions;
+            this.camera = camera;
+
+            this.camera.game.MouseDown += OnMouseClick;
 
             float[] tempVertices = {
                 position.X+((dimensions.X/2)+offset.X), position.Y+((dimensions.Y/2)+offset.Y), 0.0f,
@@ -23,6 +32,14 @@ namespace _3d.UI {
                 position.X-((dimensions.X/2)+offset.X), position.Y+((dimensions.Y/2)+offset.Y), 0.0f,
                 position.X+((dimensions.X/2)+offset.X), position.Y+((dimensions.Y/2)+offset.Y), 0.0f,
             };
+
+            Vector2[] tempCornerPositions = {
+                new Vector2(position.X+((dimensions.X/2)+offset.X), position.Y+((dimensions.Y/2)+offset.Y)), // top right
+                new Vector2(position.X-((dimensions.X/2)-offset.X), position.Y+((dimensions.Y/2)+offset.Y)), // top left
+                new Vector2(position.X+((dimensions.X/2)+offset.X), position.Y-((dimensions.Y/2)-offset.Y)), // bottom right
+                new Vector2(position.X-((dimensions.X/2)-offset.X), position.Y-((dimensions.Y/2)-offset.Y)) // bottom left
+            };
+            cornerPositions = tempCornerPositions;
 
             vertices = tempVertices;
 
@@ -40,8 +57,22 @@ namespace _3d.UI {
         public override void Render() {
             base.Render();
             shader.UseShader();
+
+            if (camera.mousePosition2D.X <= cornerPositions[0].X && camera.mousePosition2D.X > cornerPositions[1].X 
+             && camera.mousePosition2D.Y <= cornerPositions[1].Y && camera.mousePosition2D.Y > cornerPositions[2].Y) {
+                 isHovered = true;
+            }
+            else isHovered = false;
+
             GL.BindVertexArray(vao);
             GL.DrawArrays(PrimitiveType.Triangles, 0, vertices.Length);
         }
+
+        void OnMouseClick(MouseButtonEventArgs e) {
+            if (isHovered) {
+                System.Console.WriteLine("clicked button " + id);
+                id++;
+            }
+        }  
     }
 }

@@ -18,7 +18,7 @@ namespace _3d.UI {
 
         float[] vertices;
 
-        public UserInterface(float width, float height, PositionType positionType) {
+        public UserInterface(float width, float height, PositionType positionType, Camera camera) {
             shader = new Shader("Shaders/UI/vertexUIShader.glsl","Shaders/UI/fragmentUIShader.glsl");
 
             dimensions = new Vector2(position.X+(1-width),height);
@@ -48,7 +48,7 @@ namespace _3d.UI {
             GL.VertexAttribPointer(0,3,VertexAttribPointerType.Float, false, 0, 0);
 
             AddUIComponent(new UIButton("Shaders/UI/UIButton/buttonShader.glsl",
-                                        "Shaders/UI/UIButton/buttonFrag.glsl", position, new Vector2(0,.3f), new Vector2(.3f, .1f)));
+                                        "Shaders/UI/UIButton/buttonFrag.glsl", position, new Vector2(0,.3f), new Vector2(.3f, .1f), camera));
         }
 
         public void AddUIComponent(UIComponent component) {

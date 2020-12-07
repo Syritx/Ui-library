@@ -15,8 +15,9 @@ namespace _3d {
                        lookEye = new Vector3(0,0, -1),
                        up = new Vector3(0,1,0);
 
-        Game game;
+        public Game game;
         Vector2 lastPosition;
+        public Vector2 mousePosition2D;
         bool canRotate = false;
 
         Matrix4 projection;
@@ -57,6 +58,9 @@ namespace _3d {
                 yRotation -= (lastPosition.X - e.X) * .5f;
             }
             lastPosition = new Vector2(e.X, e.Y);
+            
+            // converts mouse position to 2d screen position
+            mousePosition2D = new Vector2(((e.Position.X/game.ClientSize.X)*2-.5f)*2, -((e.Position.Y/game.ClientSize.Y)*2-.5f)*2);
         }
 
         public void GiveTerrain(Tile tile) {

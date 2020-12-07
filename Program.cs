@@ -8,8 +8,6 @@ using System.Collections.Generic;
 
 using _3d.UI;
 
-// Creating the UI in the OnLoad method at line 104.
-
 namespace _3d
 {
     class Program
@@ -104,7 +102,7 @@ namespace _3d
         protected override void OnLoad() {
             camera = new Camera(this);
             tile = new Tile(camera, vertices, indices, mapResolution);
-            userInterface = new UserInterface(.5f, .4f, UserInterface.PositionType.Right);
+            userInterface = new UserInterface(.3f, .4f, UserInterface.PositionType.Left, camera);
 
             base.OnLoad();
             GL.Enable(EnableCap.DepthTest);
