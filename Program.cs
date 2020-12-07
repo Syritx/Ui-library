@@ -8,6 +8,8 @@ using System.Collections.Generic;
 
 using _3d.UI;
 
+// Creating the UI in the OnLoad method at line 104.
+
 namespace _3d
 {
     class Program
