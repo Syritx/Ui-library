@@ -6,7 +6,7 @@ using System;
 namespace _3d.UI {
     class UserInterface {
 
-        static Vector2 position = new Vector2(.085f, 0);
+        static Vector2 position = new Vector2(0, 0);
         static float uiSizeX = .4f;
         static Vector2 dimensions;
 
