@@ -35,6 +35,8 @@ namespace _3d.UI {
             vertices = tempVertices;
             uiSizeX = width;
 
+            position = new Vector2((((float)positionType*dimensions.X)+(float)positionType)/2,0);
+
             vbo = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
             GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StaticDraw);
@@ -46,7 +48,7 @@ namespace _3d.UI {
             GL.VertexAttribPointer(0,3,VertexAttribPointerType.Float, false, 0, 0);
 
             AddUIComponent(new UIButton("Shaders/UI/UIButton/buttonShader.glsl",
-                                        "Shaders/UI/UIButton/buttonFrag.glsl", new Vector2(-1,.6f), new Vector2(0,0)));
+                                        "Shaders/UI/UIButton/buttonFrag.glsl", position, new Vector2(0,.3f), new Vector2(.3f, .1f)));
         }
 
         public void AddUIComponent(UIComponent component) {
