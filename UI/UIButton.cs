@@ -1,8 +1,13 @@
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
+using System;
 
 namespace _3d.UI {
+
+    /// <summary>
+    /// his class performs an important function.
+    /// </summary>
     class UIButton : UIComponent {
 
         Vector2 dimensions;
@@ -15,11 +20,16 @@ namespace _3d.UI {
         int vao, vbo;
         int id = 1;
         bool isHovered = false;
+        Action ClickMethod;
 
-        public UIButton(string vertexShaderPath, string fragmentShaderPath, Vector2 position, Vector2 offset, Vector2 dimensions, Camera camera) {
+        /// <summary>
+        /// this class creates an interactable UI button that can call a set method
+        /// </summary>
+        public UIButton(string vertexShaderPath, string fragmentShaderPath, Vector2 position, Vector2 offset, Vector2 dimensions, Camera camera, Action ClickMethod) {
             shader = new Shader(vertexShaderPath, fragmentShaderPath);
             this.dimensions = dimensions;
             this.camera = camera;
+            this.ClickMethod = ClickMethod;
 
             this.camera.game.MouseDown += OnMouseClick;
 
@@ -70,6 +80,7 @@ namespace _3d.UI {
 
         void OnMouseClick(MouseButtonEventArgs e) {
             if (isHovered) {
+                ClickMethod();
                 System.Console.WriteLine("clicked button " + id);
                 id++;
             }

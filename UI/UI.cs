@@ -2,8 +2,13 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using System.Collections.Generic;
 using System;
+using _3d.UI.Events;
 
 namespace _3d.UI {
+
+    ///<summary>
+    /// class that can initialize and render a User Interface on the screen
+    ///</summary>
     class UserInterface {
 
         static Vector2 position = new Vector2(0, 0);
@@ -18,6 +23,9 @@ namespace _3d.UI {
 
         float[] vertices;
 
+        ///<summary>
+        /// class that can initialize and render a User Interface on the screen
+        ///</summary>
         public UserInterface(float width, float height, PositionType positionType, Camera camera) {
             shader = new Shader("Shaders/UI/vertexUIShader.glsl","Shaders/UI/fragmentUIShader.glsl");
 
@@ -48,7 +56,9 @@ namespace _3d.UI {
             GL.VertexAttribPointer(0,3,VertexAttribPointerType.Float, false, 0, 0);
 
             AddUIComponent(new UIButton("Shaders/UI/UIButton/buttonShader.glsl",
-                                        "Shaders/UI/UIButton/buttonFrag.glsl", position, new Vector2(0,.3f), new Vector2(.3f, .1f), camera));
+                                        "Shaders/UI/UIButton/buttonFrag.glsl", 
+                                        position, new Vector2(0,.3f), new Vector2(.3f, .1f), 
+                                        camera, ButtonClickEvents.Action1));
         }
 
         public void AddUIComponent(UIComponent component) {
