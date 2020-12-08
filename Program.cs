@@ -101,8 +101,8 @@ namespace _3d
 
         protected override void OnLoad() {
             camera = new Camera(this);
-            tile = new Tile(camera, vertices, indices, mapResolution);
             userInterface = new UserInterface(.3f, .4f, UserInterface.PositionType.Left, camera);
+            tile = new Tile(camera, vertices, indices, mapResolution);
 
             base.OnLoad();
             GL.Enable(EnableCap.DepthTest);
