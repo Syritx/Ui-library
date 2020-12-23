@@ -68,11 +68,19 @@ namespace _3d.UI {
             base.Render();
             shader.UseShader();
 
+            int colorPosition = GL.GetUniformLocation(shader.program, "buttonColor");
+
             if (camera.mousePosition2D.X <= cornerPositions[0].X && camera.mousePosition2D.X > cornerPositions[1].X 
              && camera.mousePosition2D.Y <= cornerPositions[1].Y && camera.mousePosition2D.Y > cornerPositions[2].Y) {
                  isHovered = true;
+                 // Hovered button color
+                 GL.Uniform3(colorPosition, new Vector3(0.0f, 1.0f, 0.0f));
             }
-            else isHovered = false;
+            else {
+                isHovered = false;
+                // Normal button color
+                GL.Uniform3(colorPosition, new Vector3(0.0f, 1.0f, 0.55f));
+            } 
 
             GL.BindVertexArray(vao);
             GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StaticDraw);
